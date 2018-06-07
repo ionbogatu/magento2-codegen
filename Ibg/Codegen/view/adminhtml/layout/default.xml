@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+-->
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" layout="admin-1column" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+    <head>
+        <css src="Ibg_Codegen::css/globalpage/currently_selected_module.css"/>
+    </head>
+    <body>
+        <referenceContainer name="notices.wrapper">
+            <block class="Ibg\Codegen\Block\Adminhtml\Globalpage\CurrentlySelectedModule" name="currently_Selected_module" template="Ibg_Codegen::globalpage/currently_selected_module.phtml"/>
+        </referenceContainer>
+        <referenceContainer name="legal.system">
+            <block class="Magento\Backend\Block\Template" name="server_time" template="Ibg_Codegen::globalpage/server_time.phtml" before="version" />
+        </referenceContainer>
+    </body>
+</page>

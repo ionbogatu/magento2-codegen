@@ -1,0 +1,18 @@
+<?php
+/**
+ * Created by PhpStorm.
+ * User: Ion Bogatu
+ * Date: 6/7/2018
+ * Time: 7:40 PM
+ *
+ * @var $block \Ibg\Codegen\Block\Adminhtml\Globalpage\CurrentlySelectedModule
+ */
+
+$currentlySelectedModule = $block->getCurrentlySelectedModule();
+?>
+
+<?php if(!is_null($currentlySelectedModule)){ ?>
+    <div class="row currently_selected_module_wrapper">
+        <span><strong>CodeGen</strong>: Currently selected module is <?php echo $currentlySelectedModule; ?>. All modifications made by Ibg_Codegen will be saved in under <?php echo $currentlySelectedModule; ?> modules's root folder.</span>
+    </div>
+<?php } ?>
