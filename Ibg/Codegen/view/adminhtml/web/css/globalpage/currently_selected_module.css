@@ -1,23 +1,30 @@
-.currently_selected_module_wrapper{
+.codegen_global_message_bold_text{
+    font-weight: bold;
+}
+
+.codegen_global_message_wrapper{
     padding: 1.5rem 3rem;
     background: rgba(0,255,0,0.1);
-    margin-top: 1.5rem;
+    margin-top: 0.5rem;
 }
 
-.currently_selected_module_wrapper.success{
+.codegen_global_message_wrapper.success{
     background: rgba(0,255,0,0.1);
 }
 
-.currently_selected_module_wrapper.warning{
+.codegen_global_message_wrapper.warning{
     background: rgba(255,0,0,0.1);
 }
 
-#currently_selected_module_modal.hidden{
+.codegen_modal.hidden{
     display: none;
 }
 
-#currently_selected_module_modal .admin__fieldset-wrapper-content{
+.codegen_modal .admin__fieldset-wrapper-content{
     padding: 2rem;
+}
+
+#currently_selected_module_modal .admin__fieldset-wrapper-content{
     opacity: 0.7;
     transform: scale(0.9);
     transition: transform 0.2s ease-in-out;
@@ -34,8 +41,16 @@
     background: #f6f6f6;
 }
 
-#currently_selected_module_modal .fieldset-wrapper-title{
+.codegen_modal .fieldset-wrapper-title{
     font-size: 1.7rem;
+}
+
+.codegen_modal .admin__field-note > span{
+    display: block;
+}
+
+.codegen_modal .admin__field-note > span:not(:first-child){
+    margin-top: 0.2rem;
 }
 
 .or-divider{

@@ -12,18 +12,15 @@ $currentlySelectedModule = $block->getCurrentlySelectedModule();
 $moduleList = $block->getModuleList();
 ?>
 
-<?php if(!is_null($currentlySelectedModule)){ ?>
-    <div class="row currently_selected_module_wrapper success">
-        <span><strong>CodeGen</strong>: Currently selected module is <?php echo $currentlySelectedModule; ?>. All modifications made by Ibg_Codegen will be saved in under <?php echo $currentlySelectedModule; ?> modules's root folder. <a href="#" class="currently_selected_module_target">Click here</a> to change.</span>
-    </div>
-<?php }else{ ?>
-    <div class="row currently_selected_module_wrapper warning">
-        <span><strong>CodeGen</strong>: You didn't select any module where to put the generated code. Please <a href="#" class="currently_selected_module_target">click here</a> to select one.</span>
-    </div>
-<?php } ?>
+<div class="row currently_selected_module_wrapper codegen_global_message_wrapper success <?php echo !is_null($currentlySelectedModule) ? '' : 'hidden'; ?>">
+    <span><strong>CodeGen</strong>: Currently selected module is <span class="codegen_global_message_bold_text"><?php echo $currentlySelectedModule; ?></span>. All modifications made by Ibg_Codegen will be saved under <span class="codegen_global_message_bold_text"><?php echo $currentlySelectedModule; ?></span> modules's root folder. <a href="#" class="currently_selected_module_target">Click here</a> to change.</span>
+</div>
+<div class="row currently_selected_module_wrapper codegen_global_message_wrapper warning <?php echo !is_null($currentlySelectedModule) ? 'hidden' : ''; ?>">
+    <span><strong>CodeGen</strong>: You didn't select any module where to put the generated code. Please <a href="#" class="currently_selected_module_target">click here</a> to select one.</span>
+</div>
 
-<div id="currently_selected_module_modal" data-submit-url="<?php echo $block->getUrl('codegen/module/createOrSelect', ['_secure' => true]); ?>" class="hidden">
-    <div data-role="spinner" data-component="codegen.module_create_or_select.form" class="admin__data-grid-loading-mask" style="display: block;">
+<div id="currently_selected_module_modal" data-submit-url="<?php echo $block->getUrl('codegen/module/createOrSelect', ['_secure' => true]); ?>" class="codegen_modal hidden">
+    <div data-role="spinner" data-component="codegen.create_or_select_module.form" class="admin__data-grid-loading-mask" style="display: block;">
         <div class="spinner">
             <span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span>
         </div>
@@ -45,7 +42,11 @@ $moduleList = $block->getModuleList();
                 </label>
 
                 <div class="admin__field-control">
-                    <input class="admin__control-text" type="text" name="module_name_create" id="codegen_module_name_create" maxlength="255">
+                    <input class="admin__control-text" type="text" name="module_name" id="codegen_module_name_create" maxlength="255">
+
+                    <div class="admin__field-note">
+                        <span><?php echo sprintf(__('Module name should match the following pattern: %s. Example <strong>Ibg_Codegen</strong>'), $block->getModuleNameRegEx()); ?></span>
+                    </div>
                 </div>
             </fieldset>
         </fieldset>
@@ -64,10 +65,10 @@ $moduleList = $block->getModuleList();
                 </label>
 
                 <div class="admin__field-control">
-                    <select class="admin__control-select" name="module_name_select" id="codegen_module_name_select">
+                    <select class="admin__control-select" name="module_name" id="codegen_module_name_select">
                         <?php if(!empty($moduleList) && is_array($moduleList)){ ?>
                             <?php foreach($moduleList as $key => $module){ ?>
-                                <option value="<?php echo $key; ?>"><?php echo $module; ?></option>
+                                <option <?php echo ($currentlySelectedModule === $module) ? 'selected' : ''; ?> value="<?php echo $module; ?>"><?php echo $module; ?></option>
                             <?php } ?>
                         <?php } ?>
                     </select>

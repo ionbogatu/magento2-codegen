@@ -10,60 +10,45 @@ namespace Ibg\Codegen\Block\Adminhtml\Globalpage;
 
 use Magento\Backend\Block\Template;
 use Ibg\Codegen\Helper\ModuleGenerator as ModuleGeneratorHelper;
-use Magento\Framework\Module\ModuleListInterface;
+use Ibg\Codegen\Helper\ControllerAndRouteGenerator as ControllerAndRouteGeneratorHelper;
 
-class CurrentlySelectedModule extends Template
+class ControllerAndRoute extends Template
 {
     /**
      * @var ModuleGeneratorHelper
      */
     private $moduleGeneratorHelper;
     /**
-     * @var ModuleListInterface
+     * @var ControllerAndRouteGeneratorHelper
      */
-    private $moduleList;
+    private $controllerAndRouteGeneratorHelper;
 
     /**
-     * CurrentlySelectedModule constructor.
+     * ControllerAndRoute constructor.
      * @param Template\Context $context
      * @param ModuleGeneratorHelper $moduleGeneratorHelper
-     * @param ModuleListInterface $moduleList
+     * @param ControllerAndRouteGeneratorHelper $controllerAndRouteGeneratorHelper
      * @param array $data
      */
     public function __construct(
         Template\Context $context,
         ModuleGeneratorHelper $moduleGeneratorHelper,
-        ModuleListInterface $moduleList,
+        ControllerAndRouteGeneratorHelper $controllerAndRouteGeneratorHelper,
         array $data = []
     )
     {
         parent::__construct($context, $data);
 
         $this->moduleGeneratorHelper = $moduleGeneratorHelper;
-        $this->moduleList = $moduleList;
+        $this->controllerAndRouteGeneratorHelper = $controllerAndRouteGeneratorHelper;
     }
 
-    /**
-     * @return mixed
-     */
     public function getCurrentlySelectedModule()
     {
         return $this->moduleGeneratorHelper->getCurrentlySelectedModule();
     }
 
-    /**
-     * @return string[]
-     */
-    public function getModuleList()
-    {
-        $result = $this->moduleList->getNames();
-        sort($result, SORT_STRING);
-
-        return $result;
-    }
-
-    public function getModuleNameRegEx()
-    {
-        return $this->moduleGeneratorHelper->getModuleNameRegEx();
+    public function getFrontNameRegEx(){
+        return $this->controllerAndRouteGeneratorHelper->getFrontNameRegEx();
     }
 }

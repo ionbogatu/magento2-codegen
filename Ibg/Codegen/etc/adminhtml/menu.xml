@@ -29,7 +29,7 @@
              parent="Ibg_Codegen::backend"
              resource="Ibg_Codegen::module"/>
 
-        <add id="Ibg_Codegen::frontend"
+        <!--<add id="Ibg_Codegen::frontend"
              title="Frontend"
              translate="title"
              module="Ibg_Codegen"
@@ -42,6 +42,6 @@
              module="Ibg_Codegen"
              sortOrder="10"
              parent="Ibg_Codegen::frontend"
-             resource="Ibg_Codegen::theme"/>
+             resource="Ibg_Codegen::theme"/>-->
     </menu>
 </config>

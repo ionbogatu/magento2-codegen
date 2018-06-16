@@ -18,16 +18,16 @@ abstract class AbstractAjaxAction extends Action
         $result = $this->resultFactory->create(ResultFactory::TYPE_JSON);
 
         $errorMessages = [];
-        if($this->getRequest()->isPost()){
-            $errorMessages = __('Unsupported HTTP Verb.');
+        if(!$this->getRequest()->isPost()){
+            $errorMessages[] = __('Unsupported HTTP Verb.');
         }
 
-        if($this->getRequest()->isAjax()){
-            $errorMessages = __('Only Ajax Requests are available');
+        if(!$this->getRequest()->isAjax()){
+            $errorMessages[] = __('Only Ajax Requests are available');
         }
 
         if(!empty($errorMessages)){
-            return $result->setData(['success' => false, 'error' => implode('\n', $errorMessages)]);
+            return $result->setData(['success' => false, 'message' => $errorMessages]);
         }
 
         return $result;
