@@ -42,8 +42,12 @@
 !/var/package/*.xml
 
 /.idea
-/app
-/!app/code/Ibg
+/app/design
+/app/etc
+/app/.htaccess
+/app/autoload.php
+/app/bootstrap.php
+/app/functions.php
 /bin
 /dev
 /generated

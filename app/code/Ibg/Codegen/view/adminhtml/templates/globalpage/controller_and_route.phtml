@@ -1,0 +1,77 @@
+<?php
+/**
+ * Created by PhpStorm.
+ * User: Ion Bogatu
+ * Date: 6/7/2018
+ * Time: 7:40 PM
+ *
+ * @var $block \Ibg\Codegen\Block\Adminhtml\Globalpage\ControllerAndRoute
+ */
+
+$currentlySelectedModule = $block->getCurrentlySelectedModule();
+?>
+
+<div class="row controller_and_route_wrapper codegen_global_message_wrapper success <?php echo !is_null($currentlySelectedModule) ? '' : 'hidden'; ?>">
+    <span><strong>CodeGen</strong>: Now, after you have selected the module. You can start by creating a <a href="#" class="controller_and_route_target">controller and a route</a>.</span>
+</div>
+
+<div id="controller_and_route_modal" data-submit-url="<?php echo $block->getUrl('codegen/controller/createControllerAndRoute', ['_secure' => true]); ?>" class="codegen_modal hidden">
+    <div data-role="spinner" data-component="codegen.controller_and_route.form" class="admin__data-grid-loading-mask" style="display: block;">
+        <div class="spinner">
+            <span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span>
+        </div>
+    </div>
+    <div data-role="messages" class="messages">
+
+    </div>
+
+    <div class="admin__fieldset-wrapper-content" data-destination-for="create">
+        <div class="fieldset-wrapper-title">
+            <strong>
+                <span>Create New Controller</span>
+            </strong>
+        </div>
+        <fieldset class="admin__fieldset">
+            <fieldset class="admin__field">
+                <label class="admin__field-label" for="codegen_module_name_create">
+                    <span><?php echo __('Front Name'); ?></span>
+                </label>
+
+                <div class="admin__field-control">
+                    <input class="admin__control-text" type="text" name="module_name" id="codegen_module_name_create" maxlength="255">
+
+                    <div class="admin__field-note">
+                        <span><?php echo sprintf(__('Front name should match the following pattern: %s. Examples <strong>front_name</strong>, <strong>front-name</strong>, <strong>frontname</strong>, <strong>frontName</strong>'), $block->getFrontNameRegEx()); ?></span>
+                        <span><?php echo sprintf(__('<strong>Hint: </strong>You can also toggle on the "Generate the route also" to also generate routes.xml file.')); ?></span>
+                    </div>
+                </div>
+            </fieldset>
+            <fieldset class="admin__field">
+                <label class="admin__field-label" for="codegen_module_name_create">
+                    <span><?php echo __('Controller Name'); ?></span>
+                </label>
+
+                <div class="admin__field-control">
+                    <input class="admin__control-text" type="text" name="module_name" id="codegen_module_name_create" maxlength="255">
+
+                    <div class="admin__field-note">
+                        <span><?php echo sprintf(__('Module name should match the following pattern: %s. Example <strong>Ibg_Codegen</strong>'), $block->getModuleNameRegEx()); ?></span>
+                    </div>
+                </div>
+            </fieldset>
+            <fieldset class="admin__field">
+                <label class="admin__field-label" for="codegen_module_name_create">
+                    <span><?php echo __('Action Name'); ?></span>
+                </label>
+
+                <div class="admin__field-control">
+                    <input class="admin__control-text" type="text" name="module_name" id="codegen_module_name_create" maxlength="255">
+
+                    <div class="admin__field-note">
+                        <span><?php echo sprintf(__('Module name should match the following pattern: %s. Example <strong>Ibg_Codegen</strong>'), $block->getModuleNameRegEx()); ?></span>
+                    </div>
+                </div>
+            </fieldset>
+        </fieldset>
+    </div>
+</div>

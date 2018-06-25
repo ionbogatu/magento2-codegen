@@ -1,0 +1,79 @@
+<?php
+/**
+ * Created by PhpStorm.
+ * User: Ion Bogatu
+ * Date: 6/7/2018
+ * Time: 7:40 PM
+ *
+ * @var $block \Ibg\Codegen\Block\Adminhtml\Globalpage\CurrentlySelectedModule
+ */
+
+$currentlySelectedModule = $block->getCurrentlySelectedModule();
+$moduleList = $block->getModuleList();
+?>
+
+<div class="row currently_selected_module_wrapper codegen_global_message_wrapper success <?php echo !is_null($currentlySelectedModule) ? '' : 'hidden'; ?>">
+    <span><strong>CodeGen</strong>: Currently selected module is <span class="codegen_global_message_bold_text"><?php echo $currentlySelectedModule; ?></span>. All modifications made by Ibg_Codegen will be saved under <span class="codegen_global_message_bold_text"><?php echo $currentlySelectedModule; ?></span> modules's root folder. <a href="#" class="currently_selected_module_target">Click here</a> to change.</span>
+</div>
+<div class="row currently_selected_module_wrapper codegen_global_message_wrapper warning <?php echo !is_null($currentlySelectedModule) ? 'hidden' : ''; ?>">
+    <span><strong>CodeGen</strong>: You didn't select any module where to put the generated code. Please <a href="#" class="currently_selected_module_target">click here</a> to select one.</span>
+</div>
+
+<div id="currently_selected_module_modal" data-submit-url="<?php echo $block->getUrl('codegen/module/createOrSelect', ['_secure' => true]); ?>" class="codegen_modal hidden">
+    <div data-role="spinner" data-component="codegen.create_or_select_module.form" class="admin__data-grid-loading-mask" style="display: block;">
+        <div class="spinner">
+            <span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span>
+        </div>
+    </div>
+    <div data-role="messages" class="messages">
+
+    </div>
+    <input type="hidden" name="destination" value="create"/>
+    <div class="admin__fieldset-wrapper-content" data-destination-for="create">
+        <div class="fieldset-wrapper-title">
+            <strong>
+                <span>Create New Module</span>
+            </strong>
+        </div>
+        <fieldset class="admin__fieldset">
+            <fieldset class="admin__field">
+                <label class="admin__field-label" for="codegen_module_name_create">
+                    <span><?php echo __('Module Name'); ?></span>
+                </label>
+
+                <div class="admin__field-control">
+                    <input class="admin__control-text" type="text" name="module_name" id="codegen_module_name_create" maxlength="255">
+
+                    <div class="admin__field-note">
+                        <span><?php echo sprintf(__('Module name should match the following pattern: %s. Example <strong>Ibg_Codegen</strong>'), $block->getModuleNameRegEx()); ?></span>
+                    </div>
+                </div>
+            </fieldset>
+        </fieldset>
+    </div>
+    <div class="or-divider short"><span>OR</span></div>
+    <div class="admin__fieldset-wrapper-content" data-destination-for="select">
+        <div class="fieldset-wrapper-title">
+            <strong>
+                <span>Select Module</span>
+            </strong>
+        </div>
+        <fieldset class="admin__fieldset">
+            <fieldset class="admin__field">
+                <label class="admin__field-label" for="codegen_module_name_select">
+                    <span><?php echo __('Module'); ?></span>
+                </label>
+
+                <div class="admin__field-control">
+                    <select class="admin__control-select" name="module_name" id="codegen_module_name_select">
+                        <?php if(!empty($moduleList) && is_array($moduleList)){ ?>
+                            <?php foreach($moduleList as $key => $module){ ?>
+                                <option <?php echo ($currentlySelectedModule === $module) ? 'selected' : ''; ?> value="<?php echo $module; ?>"><?php echo $module; ?></option>
+                            <?php } ?>
+                        <?php } ?>
+                    </select>
+                </div>
+            </fieldset>
+        </fieldset>
+    </div>
+</div>
