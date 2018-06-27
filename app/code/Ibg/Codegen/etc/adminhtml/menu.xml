@@ -12,7 +12,7 @@
              title="Code Generator"
              translate="title"
              module="Ibg_Codegen"
-             sortOrder="900"
+             sortOrder="10"
              resource="Ibg_Codegen::main"/>
         <add id="Ibg_Codegen::backend"
              title="Backend"
