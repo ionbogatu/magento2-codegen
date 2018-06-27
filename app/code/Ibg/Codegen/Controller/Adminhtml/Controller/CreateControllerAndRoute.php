@@ -8,10 +8,10 @@
 
 namespace Ibg\Codegen\Controller\Adminhtml\Controller;
 
-use Magento\Backend\App\Action;
+use Ibg\Codegen\Controller\Adminhtml\AbstractAjaxAction;
 use Magento\Framework\App\ResponseInterface;
 
-class CreateControllerAndRoute extends Action
+class CreateControllerAndRoute extends AbstractAjaxAction
 {
     /**
      * Execute action based on request and return result
@@ -23,6 +23,17 @@ class CreateControllerAndRoute extends Action
      */
     public function execute()
     {
-        // TODO: Implement execute() method.
+        $result = $this->isAjaxAndPost();
+
+        $resultData = [];
+
+        $params = $this->getRequest()->getParams();
+
+        try{
+
+        }catch(\Exception $e){
+            $result->setData(['success' => false, 'message' => $e->getMessage()]);
+            return $result;
+        }
     }
 }
