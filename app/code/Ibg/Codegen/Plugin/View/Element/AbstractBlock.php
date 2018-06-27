@@ -12,6 +12,8 @@ use DOMDocument;
 use Magento\Framework\DomDocument\DomDocumentFactory;
 use Ibg\Codegen\Helper\ModuleGenerator as ModuleGeneratorHelper;
 use Ibg\Codegen\Helper\ControllerAndRouteGenerator as ControllerAndRouteGeneratorHelper;
+use Ibg\Codegen\Helper\BlockGenerator as BlockGeneratorHelper;
+use Ibg\Codegen\Helper\HelperGenerator as HelperGeneratorHelper;
 use Magento\Framework\View\Element\Context;
 
 class AbstractBlock extends \Magento\Framework\View\Element\AbstractBlock
@@ -28,12 +30,22 @@ class AbstractBlock extends \Magento\Framework\View\Element\AbstractBlock
      * @var ControllerAndRouteGeneratorHelper
      */
     private $controllerAndRouteGeneratorHelper;
+    /**
+     * @var BlockGeneratorHelper
+     */
+    private $blockGeneratorHelper;
+    /**
+     * @var HelperGeneratorHelper
+     */
+    private $helperGeneratorHelper;
 
     /**
      * AbstractBlock constructor.
      * @param Context $context
      * @param ModuleGeneratorHelper $moduleGeneratorHelper
      * @param ControllerAndRouteGeneratorHelper $controllerAndRouteGeneratorHelper
+     * @param BlockGeneratorHelper $blockGeneratorHelper
+     * @param HelperGeneratorHelper $helperGeneratorHelper
      * @param DomDocumentFactory $domDocumentFactory
      * @param array $data
      */
@@ -42,6 +54,8 @@ class AbstractBlock extends \Magento\Framework\View\Element\AbstractBlock
         Context $context,
         ModuleGeneratorHelper $moduleGeneratorHelper,
         ControllerAndRouteGeneratorHelper $controllerAndRouteGeneratorHelper,
+        BlockGeneratorHelper $blockGeneratorHelper,
+        HelperGeneratorHelper $helperGeneratorHelper,
         DomDocumentFactory $domDocumentFactory,
         array $data = []
     )
@@ -50,6 +64,8 @@ class AbstractBlock extends \Magento\Framework\View\Element\AbstractBlock
 
         $this->moduleGeneratorHelper = $moduleGeneratorHelper;
         $this->controllerAndRouteGeneratorHelper = $controllerAndRouteGeneratorHelper;
+        $this->blockGeneratorHelper = $blockGeneratorHelper;
+        $this->helperGeneratorHelper = $helperGeneratorHelper;
         $this->domDocumentFactory = $domDocumentFactory;
     }
 
@@ -76,6 +92,24 @@ class AbstractBlock extends \Magento\Framework\View\Element\AbstractBlock
                 @$newDom->loadHTML($listItemHtml);
                 $newZendDom = new \Zend_Dom_Query($newDom);
                 $newNode = $newZendDom->query('li[data-ui-id="menu-ibg-codegen-controller-and-route"]')->current();
+                $newNode = $dom->importNode($newNode, true);
+                $codegenBackendSubmenu->appendChild($newNode);
+
+                // add new node
+                $listItemHtml = $this->blockGeneratorHelper->getMenuItemHtml();
+                $newDom = new \DOMDocument();
+                @$newDom->loadHTML($listItemHtml);
+                $newZendDom = new \Zend_Dom_Query($newDom);
+                $newNode = $newZendDom->query('li[data-ui-id="menu-ibg-codegen-block"]')->current();
+                $newNode = $dom->importNode($newNode, true);
+                $codegenBackendSubmenu->appendChild($newNode);
+
+                // add new node
+                $listItemHtml = $this->helperGeneratorHelper->getMenuItemHtml();
+                $newDom = new \DOMDocument();
+                @$newDom->loadHTML($listItemHtml);
+                $newZendDom = new \Zend_Dom_Query($newDom);
+                $newNode = $newZendDom->query('li[data-ui-id="menu-ibg-codegen-helper"]')->current();
                 $newNode = $dom->importNode($newNode, true);
                 $codegenBackendSubmenu->appendChild($newNode);
 

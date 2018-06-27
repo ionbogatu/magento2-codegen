@@ -8,13 +8,18 @@
 <page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" layout="admin-1column" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
     <head>
         <css src="Ibg_Codegen::css/globalpage/currently_selected_module.css"/>
+        <css src="Ibg_Codegen::css/globalpage/block.css"/>
         <script src="Ibg_Codegen::js/globalpage/currently_selected_module.js"/>
         <script src="Ibg_Codegen::js/globalpage/controller_and_route.js"/>
+        <script src="Ibg_Codegen::js/globalpage/block.js"/>
+        <script src="Ibg_Codegen::js/globalpage/helper.js"/>
     </head>
     <body>
         <referenceContainer name="notices.wrapper">
             <block class="Ibg\Codegen\Block\Adminhtml\Globalpage\CurrentlySelectedModule" name="currently_Selected_module" template="Ibg_Codegen::globalpage/currently_selected_module.phtml"/>
             <block class="Ibg\Codegen\Block\Adminhtml\Globalpage\ControllerAndRoute" name="controller_and_route" template="Ibg_Codegen::globalpage/controller_and_route.phtml"/>
+            <block class="Ibg\Codegen\Block\Adminhtml\Globalpage\Block" name="block" template="Ibg_Codegen::globalpage/block.phtml"/>
+            <block class="Ibg\Codegen\Block\Adminhtml\Globalpage\Helper" name="helper" template="Ibg_Codegen::globalpage/helper.phtml"/>
         </referenceContainer>
         <referenceContainer name="legal.system">
             <block class="Magento\Backend\Block\Template" name="server_time" template="Ibg_Codegen::globalpage/server_time.phtml" before="version" />
