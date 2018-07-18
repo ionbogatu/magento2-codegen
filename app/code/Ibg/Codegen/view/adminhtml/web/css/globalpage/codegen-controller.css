@@ -1,0 +1,19 @@
+.slider{
+    width: 100%;
+}
+
+.slider-content{
+    width: 100%;
+}
+
+button.display-none.hidden{
+    display: none;
+}
+
+#controller_modal .slider-content{
+    display: none;
+}
+
+#controller_modal .slider-content.active{
+    display: block;
+}

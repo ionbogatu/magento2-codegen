@@ -28,6 +28,27 @@
              sortOrder="10"
              parent="Ibg_Codegen::backend"
              resource="Ibg_Codegen::module"/>
+        <add id="Ibg_Codegen::controller"
+             title="Controller"
+             translate="label"
+             module="Ibg_Codegen"
+             sortOrder="20"
+             parent="Ibg_Codegen::backend"
+             resource="Ibg_Codegen::controller"/>
+        <add id="Ibg_Codegen::block"
+             title="Block"
+             translate="label"
+             module="Ibg_Codegen"
+             sortOrder="30"
+             parent="Ibg_Codegen::backend"
+             resource="Ibg_Codegen::block"/>
+        <add id="Ibg_Codegen::helper"
+             title="Helper"
+             translate="label"
+             module="Ibg_Codegen"
+             sortOrder="40"
+             parent="Ibg_Codegen::backend"
+             resource="Ibg_Codegen::helper"/>
 
         <!--<add id="Ibg_Codegen::frontend"
              title="Frontend"
