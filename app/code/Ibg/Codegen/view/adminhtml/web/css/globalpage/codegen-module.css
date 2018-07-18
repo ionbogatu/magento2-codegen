@@ -24,21 +24,27 @@
     padding: 2rem;
 }
 
+#controller_modal .slider-content.module .admin__fieldset-wrapper-content,
 #currently_selected_module_modal .admin__fieldset-wrapper-content{
+    box-sizing: border-box;
     opacity: 0.7;
     transform: scale(0.9);
     transition: transform 0.2s ease-in-out;
 }
 
+#controller_modal .slider-content.module .admin__fieldset-wrapper-content.active,
+#controller_modal .slider-content.module .admin__fieldset-wrapper-content:hover,
 #currently_selected_module_modal .admin__fieldset-wrapper-content.active,
 #currently_selected_module_modal .admin__fieldset-wrapper-content:hover{
     opacity: 1;
     transform: scale(0.92);
     transition: transform 0.2s ease-in-out;
+    background: #f6f6f6;
 }
 
-#currently_selected_module_modal .admin__fieldset-wrapper-content:hover{
-    background: #f6f6f6;
+#controller_modal .slider-content.module .admin__fieldset-wrapper-content.active,
+#currently_selected_module_modal .admin__fieldset-wrapper-content.active{
+    border: 2px dashed grey;
 }
 
 .codegen_modal .fieldset-wrapper-title{
@@ -70,4 +76,14 @@
     margin-top: -1.2rem;
     background: white;
     padding: 0 6px;
+}
+
+.action-main-popup.select{
+    background-color: #514943;
+    border-color: #514943;
+}
+
+.action-main-popup.create{
+    background-color: #eb5202;
+    border-color: #eb5202;
 }

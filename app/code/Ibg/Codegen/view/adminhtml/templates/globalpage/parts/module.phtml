@@ -1,0 +1,71 @@
+<?php
+/**
+ * Created by PhpStorm.
+ * User: Ion Bogatu
+ * Date: 7/9/2018
+ * Time: 7:50 PM
+ *
+ * @var $block \Ibg\Codegen\Block\Adminhtml\Globalpage\Module
+ */
+
+$currentlySelectedModule = $this->helper('Ibg\Codegen\Helper\ModuleGenerator')->getCurrentlySelectedModule();
+$moduleList = $this->helper('Ibg\Codegen\Helper\ModuleGenerator')->getModuleList();
+?>
+
+<div data-bind="scope: 'codegen.module'">
+    <div data-role="messages" class="messages">
+
+    </div>
+    <input type="hidden" id="destination" data-bind="value: $parent.currentAction"/>
+    <div class="admin__fieldset-wrapper-content" data-bind="css: {active: $parent.currentAction() === 'create'}">
+        <div class="fieldset-wrapper-title">
+            <strong>
+                <span>Create New Module</span>
+            </strong>
+        </div>
+        <fieldset class="admin__fieldset">
+            <fieldset class="admin__field">
+                <label class="admin__field-label" for="codegen_module_name_create">
+                    <span><?php echo __('Module Name'); ?></span>
+                </label>
+
+                <div class="admin__field-control">
+                    <input class="admin__control-text"
+                           type="text"
+                           id="codegen_module_name_create"
+                           data-bind="event: {focus: function(data, event){ changeModuleAction('create', event) }, change: function(data, event){ changeModuleAction('create', event) } }"
+                           maxlength="255">
+
+                    <div class="admin__field-note">
+                        <span><?php echo sprintf(__('Module name should match the following pattern: %s. Example <strong>Ibg_Codegen</strong>'), $block->getModuleNameRegEx()); ?></span>
+                    </div>
+                </div>
+            </fieldset>
+        </fieldset>
+    </div>
+    <div class="or-divider short"><span>OR</span></div>
+    <div class="admin__fieldset-wrapper-content" data-bind="css: {active: $parent.currentAction() === 'select'}">
+        <div class="fieldset-wrapper-title">
+            <strong>
+                <span>Select Module</span>
+            </strong>
+        </div>
+        <fieldset class="admin__fieldset">
+            <fieldset class="admin__field">
+                <label class="admin__field-label" for="codegen_module_name_select">
+                    <span><?php echo __('Module'); ?></span>
+                </label>
+
+                <div class="admin__field-control">
+                    <select class="admin__control-select" id="codegen_module_name_select" data-bind="event: {click: function(data, event){ changeModuleAction('select', data) } }">
+                        <?php if(!empty($moduleList) && is_array($moduleList)){ ?>
+                            <?php foreach($moduleList as $key => $module){ ?>
+                                <option <?php echo ($currentlySelectedModule === $module) ? 'selected' : ''; ?> value="<?php echo $module; ?>"><?php echo $module; ?></option>
+                            <?php } ?>
+                        <?php } ?>
+                    </select>
+                </div>
+            </fieldset>
+        </fieldset>
+    </div>
+</div>

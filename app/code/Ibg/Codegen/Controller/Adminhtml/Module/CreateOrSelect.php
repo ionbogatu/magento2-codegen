@@ -12,7 +12,6 @@ use Ibg\Codegen\Controller\Adminhtml\AbstractAjaxAction;
 use Magento\Backend\App\Action;
 use Magento\Framework\App\ResponseInterface;
 use Magento\Framework\App\Filesystem\DirectoryList;
-use Ibg\Codegen\Helper\GeneratorHelper;
 use Ibg\Codegen\Helper\ModuleGenerator as ModuleGeneratorHelper;
 use Ibg\Codegen\Helper\ControllerAndRouteGenerator as ControllerAndRouteGeneratorHelper;
 use Magento\Framework\Filesystem;
@@ -26,10 +25,6 @@ class CreateOrSelect extends AbstractAjaxAction
      */
     private $directoryList;
     /**
-     * @var GeneratorHelper
-     */
-    private $generatorHelper;
-    /**
      * @var ModuleGeneratorHelper
      */
     private $moduleGeneratorHelper;
@@ -37,10 +32,6 @@ class CreateOrSelect extends AbstractAjaxAction
      * @var Filesystem
      */
     private $filesystem;
-    /**
-     * @var CodegenLogger
-     */
-    private $codegenLogger;
     /**
      * @var ModuleResource
      */
@@ -54,7 +45,6 @@ class CreateOrSelect extends AbstractAjaxAction
      * CreateOrSelect constructor.
      * @param Action\Context $context
      * @param DirectoryList $directoryList
-     * @param GeneratorHelper $generatorHelper
      * @param ModuleGeneratorHelper $moduleGeneratorHelper
      * @param ControllerAndRouteGeneratorHelper $controllerAndRouteGeneratorHelper
      * @param Filesystem $filesystem
@@ -64,7 +54,6 @@ class CreateOrSelect extends AbstractAjaxAction
     public function __construct(
         Action\Context $context,
         DirectoryList $directoryList,
-        GeneratorHelper $generatorHelper,
         ModuleGeneratorHelper $moduleGeneratorHelper,
         ControllerAndRouteGeneratorHelper $controllerAndRouteGeneratorHelper,
         Filesystem $filesystem,
@@ -72,18 +61,13 @@ class CreateOrSelect extends AbstractAjaxAction
         ModuleResource $moduleResource
     )
     {
-        $t = microtime(true);
-        $micro = sprintf("%06d",($t - floor($t)) * 1000000);
-        $d = new \DateTime( date('Y-m-d H:i:s.'.$micro, $t) );
-        $codegenLogger->info('CreateOrSelect action started at: ' . $d->format('Y-m-d H:i:s.u'));
-        parent::__construct($context);
+        parent::__construct($context, $codegenLogger);
+        $this->logTime('CreateOrSelect action started.');
 
         $this->directoryList = $directoryList;
-        $this->generatorHelper = $generatorHelper;
         $this->moduleGeneratorHelper = $moduleGeneratorHelper;
         $this->controllerAndRouteGeneratorHelper = $controllerAndRouteGeneratorHelper;
         $this->filesystem = $filesystem;
-        $this->codegenLogger = $codegenLogger;
         $this->moduleResource = $moduleResource;
     }
 
@@ -103,15 +87,6 @@ class CreateOrSelect extends AbstractAjaxAction
         $params = $this->getRequest()->getParams();
 
         try {
-
-            if (empty($params['module_name'])) {
-                throw new \Exception(__('Module name cannot be empty when creating new module'));
-            }
-
-            if (empty($params['destination'])) {
-                throw new \Exception(__('Cannot determine whether to create a new module or select an existing one'));
-            }
-
             if($params['destination'] === 'create'){
                 $resultData = $this->createModule();
             }else if($params['destination'] === 'select'){
@@ -122,14 +97,7 @@ class CreateOrSelect extends AbstractAjaxAction
             return $result;
         }
 
-        $t = microtime(true);
-        $micro = sprintf("%06d",($t - floor($t)) * 1000000);
-        $d = new \DateTime( date('Y-m-d H:i:s.'.$micro, $t) );
-        $this->codegenLogger->info('CreateOrSelect action ended at: ' . $d->format('Y-m-d H:i:s.u'));
-
-        $resultData['menu'] = [
-            'controllerAndActionHtml' => $this->controllerAndRouteGeneratorHelper->getMenuItemHtml()
-        ];
+        $this->logTime('CreateOrSelect action ended.');
 
         $result->setData($resultData);
         return $result;
@@ -153,7 +121,7 @@ class CreateOrSelect extends AbstractAjaxAction
             throw new \Exception(sprintf(__('Module with name %s already exists.'), $params['module_name']));
         }
 
-        $module_path = $this->generatorHelper->buildLocation($params['module_name']);
+        $module_path = $this->controllerAndRouteGeneratorHelper->buildLocation($params['module_name']);
         if(!file_exists($module_path)){
             if(!mkdir($module_path, 0644, true)){
                 throw new \Exception(__('Cannot create module\'s directory.'));
@@ -234,12 +202,12 @@ class CreateOrSelect extends AbstractAjaxAction
      */
     private function generateModule($module_name){
 
-        $filesToGenerate = $this->moduleGeneratorHelper->getModuleFilesToGenerate();
+        $filesToGenerate = $this->moduleGeneratorHelper->getFilesToGenerate();
 
         foreach($filesToGenerate as $file){
-            $this->generatorHelper->copyFileToLocation(
+            $this->controllerAndRouteGeneratorHelper->copyFileToLocation(
                 $file,
-                $this->generatorHelper->buildLocation($module_name, $file),
+                $this->controllerAndRouteGeneratorHelper->buildLocation($module_name, $file),
                 [
                     'setupVersion' => '0.1.0',
                     'componentName'=> $this->getRequest()->getParam('module_name')
@@ -247,7 +215,7 @@ class CreateOrSelect extends AbstractAjaxAction
             );
         }
 
-        return ['success' => true, 'message' => sprintf(__('Module %s was successfully generated.'), $module_name)];
+        return ['success' => true];
     }
 
     /**
@@ -276,5 +244,21 @@ class CreateOrSelect extends AbstractAjaxAction
 
         $this->moduleResource->setDbVersion($module_name, $version);
         $this->moduleResource->setDataVersion($module_name, $version);
+    }
+
+    /**
+     * @throws \Exception
+     */
+    protected function validateParams()
+    {
+        $params = $this->getRequest()->getParams();
+
+        if (empty($params['module_name'])) {
+            throw new \Exception(__('Module name cannot be empty when creating new module.'));
+        }
+
+        if (empty($params['destination'])) {
+            throw new \Exception(__('Cannot determine whether to create a new module or select an existing one.'));
+        }
     }
 }

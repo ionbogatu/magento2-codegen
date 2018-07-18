@@ -11,6 +11,7 @@ namespace Ibg\Codegen\Helper;
 use Magento\Backend\Model\Session;
 use Magento\Framework\App\Helper\Context;
 use Magento\Framework\App\Filesystem\DirectoryList;
+use Magento\Framework\Module\ModuleListInterface;
 
 class ModuleGenerator extends GeneratorHelper
 {
@@ -18,24 +19,34 @@ class ModuleGenerator extends GeneratorHelper
      * @var Session
      */
     private $session;
+    /**
+     * @var ModuleListInterface
+     */
+    private $moduleList;
 
     /**
      * ModuleGenerator constructor.
      * @param Context $context
-     * @param Session $session
      * @param DirectoryList $directoryList
+     * @param Session $session
+     * @param ModuleListInterface $moduleList
      */
     public function __construct(
         Context $context,
         DirectoryList $directoryList,
-        Session $session
+        Session $session,
+        ModuleListInterface $moduleList
     )
     {
         parent::__construct($context, $directoryList);
 
         $this->session = $session;
+        $this->moduleList = $moduleList;
     }
 
+    /**
+     * @return mixed
+     */
     public function getCurrentlySelectedModule()
     {
         return $this->session->getCurrentlySelectedModule();
@@ -46,7 +57,11 @@ class ModuleGenerator extends GeneratorHelper
         return '/([A-Z]+[a-z]*)_[A-Za-z]+/';
     }
 
-    public function getModuleFilesToGenerate(){
+    /**
+     * @return array
+     * @throws \Magento\Framework\Exception\FileSystemException
+     */
+    public function getFilesToGenerate(){
 
         $codegenModulePath = $this->getCodegenModulePath();
 
@@ -56,6 +71,10 @@ class ModuleGenerator extends GeneratorHelper
         ];
     }
 
+    /**
+     * @param $config
+     * @throws \Magento\Framework\Exception\FileSystemException
+     */
     public function regenerateConfigFile($config)
     {
         $configFilePath = $this->directoryList->getPath(DirectoryList::APP) . '/etc/config.php';
@@ -81,5 +100,18 @@ class ModuleGenerator extends GeneratorHelper
         fwrite($fd, "];");
 
         fclose($fd);
+    }
+
+
+
+    /**
+     * @return string[]
+     */
+    public function getModuleList()
+    {
+        $result = $this->moduleList->getNames();
+        sort($result, SORT_STRING);
+
+        return $result;
     }
 }

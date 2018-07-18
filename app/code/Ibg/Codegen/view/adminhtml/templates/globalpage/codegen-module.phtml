@@ -1,0 +1,30 @@
+<?php
+/**
+ * Created by PhpStorm.
+ * User: Ion Bogatu
+ * Date: 6/7/2018
+ * Time: 7:40 PM
+ *
+ * @var $block \Ibg\Codegen\Block\Adminhtml\Globalpage\Module
+ */
+?>
+
+<div data-bind="scope: 'codegen'">
+    <div data-bind="scope: 'codegen.module'">
+        <div class="row currently_selected_module_wrapper codegen_global_message_wrapper success hidden" data-bind="css: {hidden: !showSuccessMessage()}">
+            <span><strong>CodeGen</strong>: Currently selected module is <span class="codegen_global_message_bold_text currently_selected_module_text" data-bind="text: $parent.currentModule"></span>. All modifications made by Ibg_Codegen will be saved under <span class="codegen_global_message_bold_text currently_selected_module_text" data-bind="text: $parent.currentModule"></span> modules's root folder. <a href="#" class="currently_selected_module_target">Click here</a> to change.</span>
+        </div>
+        <div class="row currently_selected_module_wrapper codegen_global_message_wrapper warning hidden" data-bind="css: {hidden: showSuccessMessage()}">
+            <span><strong>CodeGen</strong>: You didn't select any module where to put the generated code. Please <a href="#" class="currently_selected_module_target">click here</a> to select one.</span>
+        </div>
+    </div>
+</div>
+
+<div id="currently_selected_module_modal" data-submit-url="<?php echo $block->getUrl('codegen/module/createOrSelect', ['_secure' => true]); ?>" class="codegen_modal hidden" data-bind="scope: 'codegen'">
+    <div data-role="spinner" data-component="codegen.create_or_select_module.form" class="admin__data-grid-loading-mask" style="display: block;">
+        <div class="spinner">
+            <span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span>
+        </div>
+    </div>
+    <?php include __DIR__ . '/parts/module.phtml'; ?>
+</div>

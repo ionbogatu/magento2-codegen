@@ -10,9 +10,30 @@ namespace Ibg\Codegen\Controller\Adminhtml;
 
 use Magento\Backend\App\Action;
 use Magento\Framework\Controller\ResultFactory;
+use Ibg\Codegen\Logger\Logger as CodegenLogger;
 
 abstract class AbstractAjaxAction extends Action
 {
+    /**
+     * @var CodegenLogger
+     */
+    private $codegenLogger;
+
+    /**
+     * AbstractAjaxAction constructor.
+     * @param Action\Context $context
+     * @param CodegenLogger $codegenLogger
+     */
+    public function __construct(
+        Action\Context $context,
+        CodegenLogger $codegenLogger
+    )
+    {
+        parent::__construct($context);
+
+        $this->codegenLogger = $codegenLogger;
+    }
+
     public function isAjaxAndPost()
     {
         $result = $this->resultFactory->create(ResultFactory::TYPE_JSON);
@@ -30,6 +51,25 @@ abstract class AbstractAjaxAction extends Action
             return $result->setData(['success' => false, 'message' => $errorMessages]);
         }
 
+        try{
+            $this->validateParams();
+        }catch(\Exception $e){
+            return $result->setData(['success' => false, 'message' => $e->getMessage()]);
+        }
+
         return $result;
     }
+
+    public function logTime($message){
+        $t = microtime(true);
+        $micro = sprintf("%06d",($t - floor($t)) * 1000000);
+        $d = new \DateTime( date('Y-m-d H:i:s.'.$micro, $t) );
+        $this->codegenLogger->info('[' . $d->format('Y-m-d H:i:s.u') . ']: ' . $message);
+    }
+
+    /**
+     * @return void
+     * @throws \Exception
+     */
+    abstract protected function validateParams();
 }

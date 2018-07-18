@@ -1,0 +1,43 @@
+<?php
+/**
+ * Created by PhpStorm.
+ * User: Ion Bogatu
+ * Date: 6/28/2018
+ * Time: 5:21 PM
+ */
+
+/**
+ * @var \Ibg\Codegen\Helper\ModuleGenerator $moduleGeneratorHelper
+ */
+$moduleGeneratorHelper = $this->helper('\Ibg\Codegen\Helper\ModuleGenerator');
+?>
+
+<script type="text/x-magento-init">
+    {
+        "*": {
+            "Magento_Ui/js/core/app": {
+                "components": {
+                    "codegen": {
+                        "component": "Ibg_Codegen/js/globalpage/codegen-bindings",
+                        "currentModule": "<?php echo $moduleGeneratorHelper->getCurrentlySelectedModule() ? $moduleGeneratorHelper->getCurrentlySelectedModule() : '' ?>",
+                        "isDecisive": "<?php echo $moduleGeneratorHelper->getCurrentlySelectedModule() ? true : false ?>",
+                        "children": {
+                            "module": {
+                                "component": "Ibg_Codegen/js/globalpage/codegen-module",
+                                "data": {
+                                    "showSuccessMessage": "<?php echo $moduleGeneratorHelper->getCurrentlySelectedModule() ? true : false; ?>"
+                                }
+                            },
+                            "controller": {
+                                "component": "Ibg_Codegen/js/globalpage/codegen-controller",
+                                "data": {
+                                    "showSuccessMessage": "<?php echo $moduleGeneratorHelper->getCurrentlySelectedModule() ? true : false; ?>"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+</script>

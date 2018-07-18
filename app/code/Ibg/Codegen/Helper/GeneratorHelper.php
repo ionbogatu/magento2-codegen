@@ -12,7 +12,7 @@ use Magento\Framework\App\Filesystem\DirectoryList;
 use Magento\Framework\App\Helper\AbstractHelper;
 use Magento\Framework\App\Helper\Context;
 
-class GeneratorHelper extends AbstractHelper
+abstract class GeneratorHelper extends AbstractHelper
 {
     /**
      * @var DirectoryList
@@ -116,4 +116,9 @@ class GeneratorHelper extends AbstractHelper
     {
         return '/\{\{[a-zA-Z]+[a-zA-Z0-9]*\}\}/m';
     }
+
+    /**
+     * @return array
+     */
+    abstract public function getFilesToGenerate();
 }
