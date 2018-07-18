@@ -11,11 +11,7 @@
 $currentlySelectedModule = $block->getCurrentlySelectedModule();
 ?>
 
-<div class="row controller_and_route_wrapper codegen_global_message_wrapper success hidden">
-
-</div>
-
-<div id="controller_and_route_modal" data-submit-url="<?php echo $block->getUrl('codegen/helper/createHelper', ['_secure' => true]); ?>" class="codegen_modal hidden">
+<div id="helper_modal" data-submit-url="<?php echo $block->getUrl('codegen/helper/createHelper', ['_secure' => true]); ?>" class="codegen_modal hidden">
     <div data-role="spinner" data-component="codegen.helper.form" class="admin__data-grid-loading-mask" style="display: block;">
         <div class="spinner">
             <span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span>
@@ -28,50 +24,50 @@ $currentlySelectedModule = $block->getCurrentlySelectedModule();
     <div class="admin__fieldset-wrapper-content">
         <div class="fieldset-wrapper-title">
             <strong>
-                <span>Create New Controller</span>
+                <span>Create New Helper</span>
             </strong>
         </div>
         <fieldset class="admin__fieldset">
-            <fieldset class="admin__field">
+            <!--<fieldset class="admin__field">
                 <label class="admin__field-label" for="codegen_module_name_create">
-                    <span><?php echo __('Front Name'); ?></span>
+                    <span><?php /*echo __('Front Name'); */?></span>
                 </label>
 
                 <div class="admin__field-control">
-                    <input class="admin__control-text" type="text" name="module_name" id="codegen_module_name_create" maxlength="255">
+                    <input class="admin__control-text" type="text" id="codegen_module_name_create" maxlength="255">
 
                     <div class="admin__field-note">
-                        <span><?php echo sprintf(__('Front name should match the following pattern: %s. Examples <strong>front_name</strong>, <strong>front-name</strong>, <strong>frontname</strong>, <strong>frontName</strong>'), $block->getFrontNameRegEx()); ?></span>
-                        <span><?php echo sprintf(__('<strong>Hint: </strong>You can also toggle on the "Generate the route also" to also generate routes.xml file.')); ?></span>
+                        <span><?php /*echo sprintf(__('Front name should match the following pattern: %s. Examples <strong>front_name</strong>, <strong>front-name</strong>, <strong>frontname</strong>, <strong>frontName</strong>'), $block->getFrontNameRegEx()); */?></span>
+                        <span><?php /*echo sprintf(__('<strong>Hint: </strong>You can also toggle on the "Generate the route also" to also generate routes.xml file.')); */?></span>
                     </div>
                 </div>
             </fieldset>
             <fieldset class="admin__field">
                 <label class="admin__field-label" for="codegen_module_name_create">
-                    <span><?php echo __('Controller Name'); ?></span>
+                    <span><?php /*echo __('Controller Name'); */?></span>
                 </label>
 
                 <div class="admin__field-control">
-                    <input class="admin__control-text" type="text" name="module_name" id="codegen_module_name_create" maxlength="255">
+                    <input class="admin__control-text" type="text" id="codegen_module_name_create" maxlength="255">
 
                     <div class="admin__field-note">
-                        <span><?php echo sprintf(__('Module name should match the following pattern: %s. Example <strong>Ibg_Codegen</strong>'), $block->getModuleNameRegEx()); ?></span>
+                        <span><?php /*echo sprintf(__('Module name should match the following pattern: %s. Example <strong>Ibg_Codegen</strong>'), $block->getModuleNameRegEx()); */?></span>
                     </div>
                 </div>
             </fieldset>
             <fieldset class="admin__field">
                 <label class="admin__field-label" for="codegen_module_name_create">
-                    <span><?php echo __('Action Name'); ?></span>
+                    <span><?php /*echo __('Action Name'); */?></span>
                 </label>
 
                 <div class="admin__field-control">
-                    <input class="admin__control-text" type="text" name="module_name" id="codegen_module_name_create" maxlength="255">
+                    <input class="admin__control-text" type="text" id="codegen_module_name_create" maxlength="255">
 
                     <div class="admin__field-note">
-                        <span><?php echo sprintf(__('Module name should match the following pattern: %s. Example <strong>Ibg_Codegen</strong>'), $block->getModuleNameRegEx()); ?></span>
+                        <span><?php /*echo sprintf(__('Module name should match the following pattern: %s. Example <strong>Ibg_Codegen</strong>'), $block->getModuleNameRegEx()); */?></span>
                     </div>
                 </div>
-            </fieldset>
+            </fieldset>-->
         </fieldset>
     </div>
 </div>

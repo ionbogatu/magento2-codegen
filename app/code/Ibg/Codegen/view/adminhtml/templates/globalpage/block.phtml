@@ -30,12 +30,12 @@ $areas = $block->getAreas();
         </div>
         <fieldset class="admin__fieldset">
             <fieldset class="admin__field">
-                <label class="admin__field-label" for="block_area">
+                <label class="admin__field-label" for="codegen_block_area">
                     <span><?php echo __('Area'); ?></span>
                 </label>
 
                 <div class="admin__field-control">
-                    <select class="admin__control-select" name="block_area" id="block_area">
+                    <select class="admin__control-select" id="codegen_block_area">
                         <?php if(!empty($areas)){ ?>
                             <?php foreach($areas as $area){ ?>
                                 <option value="<?php echo $area['value']; ?>"><?php echo $area['label']; ?></option>
@@ -44,19 +44,19 @@ $areas = $block->getAreas();
                     </select>
 
                     <div class="admin__field-note">
-                        <span><?php echo sprintf(__('Area where the block will be generated.'), $block->getBlockClassNameRegEx()); ?></span>
+                        <span><?php echo __('Area where the block will be generated.'); ?></span>
                     </div>
                 </div>
             </fieldset>
             <fieldset class="admin__field">
-                <label class="admin__field-label" for="block_class_path">
+                <label class="admin__field-label" for="codegen_block_class_path">
                     <span><?php echo __('Block Class Path'); ?></span>
                 </label>
 
                 <div class="admin__field-control">
                     <div class="admin__field-control-flex">
                         <span class="absolute_path">\<?php echo implode('\\', explode('_', $currentlySelectedModule)); ?>\Block<span class="area"></span>\</span>
-                        <input class="admin__control-text" type="text" name="block_class_path" id="block_class_path" maxlength="255">
+                        <input class="admin__control-text" type="text" id="codegen_block_class_path" maxlength="255">
                     </div>
 
                     <div class="admin__field-note">
@@ -67,12 +67,12 @@ $areas = $block->getAreas();
                 </div>
             </fieldset>
             <fieldset class="admin__field">
-                <label class="admin__field-label" for="block_name_in_layout">
+                <label class="admin__field-label" for="codegen_block_name_in_layout">
                     <span><?php echo __('Block Name in Layout'); ?></span>
                 </label>
 
                 <div class="admin__field-control">
-                    <input class="admin__control-text" type="text" name="block_name_in_layout" id="block_name_in_layout" maxlength="255">
+                    <input class="admin__control-text" type="text" id="codegen_block_name_in_layout" maxlength="255">
 
                     <div class="admin__field-note">
                         <span><?php echo sprintf(__('Block name in layout should match the following pattern: %s. Examples <strong>block</strong>, <strong>my_block</strong>, <strong>main.block</strong>'), $block->getBlockNameInLayoutRegEx()); ?></span>

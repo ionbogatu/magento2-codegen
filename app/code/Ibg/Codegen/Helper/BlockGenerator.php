@@ -10,13 +10,6 @@ namespace Ibg\Codegen\Helper;
 
 class BlockGenerator extends GeneratorHelper
 {
-    public function getMenuItemHtml()
-    {
-        return '<li data-ui-id="menu-ibg-codegen-block" class="item-block level-2" role="menu-item">
-                    <a href="#" onclick="return false;" class=""><span>Block</span></a>
-                </li>';
-    }
-
     public function getBlockClassNameRegEx()
     {
         return '/[A-Z]+[a-zA-Z]*(\\[A-Z]+[a-zA-Z]*)*/';
@@ -25,5 +18,13 @@ class BlockGenerator extends GeneratorHelper
     public function getBlockNameInLayoutRegEx()
     {
         return '/[a-z]+[._a-zA-Z]*/';
+    }
+
+    /**
+     * @return array
+     */
+    public function getFilesToGenerate()
+    {
+        return [];
     }
 }

@@ -10,10 +10,11 @@ namespace Ibg\Codegen\Helper;
 
 class HelperGenerator extends GeneratorHelper
 {
-    public function getMenuItemHtml()
+    /**
+     * @return array
+     */
+    public function getFilesToGenerate()
     {
-        return '<li data-ui-id="menu-ibg-codegen-helper" class="item-block level-2" role="menu-item">
-                    <a href="#" onclick="return false;" class=""><span>Helper</span></a>
-                </li>';
+        return [];
     }
 }
