@@ -1,6 +1,6 @@
 define([
     'jquery',
-    'uiComponent',
+    'Ibg_Codegen/js/components/uiComponent',
     'Magento_Ui/js/modal/modal',
     'Magento_Ui/js/lib/spinner',
     'Ibg_Codegen/js/globalpage/codegen-bindings',
@@ -21,11 +21,16 @@ define([
 
         initialize: function(){
 
-            let self = this;
-
             this._super();
 
-            this.showSuccessMessage = ko.observable(this.data.showSuccessMessage);
+            let self = this;
+
+            this.showSuccessMessage = ko.observable(this.showSuccessMessage);
+            this.moduleList = ko.observableArray(this.moduleList);
+
+            this.moduleList.subscribe(function(newValue){
+                newValue.sort();
+            });
 
             $(document).ready(function(){
 
@@ -77,7 +82,7 @@ define([
                     },
                     success: function(data){
                         let messageTemplate = '';
-                        let $moduleSelect = $modal.find('#codegen_module_name_select');
+                        /*let $moduleSelect = $modal.find('#codegen_module_name_select');*/
                         let $messageSuccess = $('.currently_selected_module_wrapper.success');
                         let $messageWarning = $('.currently_selected_module_wrapper.warning');
 
@@ -85,11 +90,13 @@ define([
                             $messageSuccess.show();
                             $messageWarning.hide();
                             if(parent.currentAction() === 'create'){
-                                $moduleSelect.append('<option value="' + parent.currentModule() + '">' + parent.currentModule() + '</option>');
+                                // $moduleSelect.append('<option value="' + parent.currentModule() + '">' + parent.currentModule() + '</option>');
+                                self.moduleList.push(parent.currentModule());
                             }
+                            self.removeModuleFromSlider();
                             modal.closeModal();
                             self.showSuccessMessage(true);
-                            parent.isDecisive(true);
+                            /*parent.isDecisive(true);*/
                             uiRegistry.get('codegen.controller').showSuccessMessage(true);
                         }else{
                             if(Array.isArray(data.message)){

@@ -8,6 +8,7 @@
 
 /**
  * @var \Ibg\Codegen\Helper\ModuleGenerator $moduleGeneratorHelper
+ * @var \Magento\Backend\Block\Template $block
  */
 $moduleGeneratorHelper = $this->helper('\Ibg\Codegen\Helper\ModuleGenerator');
 ?>
@@ -20,19 +21,15 @@ $moduleGeneratorHelper = $this->helper('\Ibg\Codegen\Helper\ModuleGenerator');
                     "codegen": {
                         "component": "Ibg_Codegen/js/globalpage/codegen-bindings",
                         "currentModule": "<?php echo $moduleGeneratorHelper->getCurrentlySelectedModule() ? $moduleGeneratorHelper->getCurrentlySelectedModule() : '' ?>",
-                        "isDecisive": "<?php echo $moduleGeneratorHelper->getCurrentlySelectedModule() ? true : false ?>",
                         "children": {
                             "module": {
                                 "component": "Ibg_Codegen/js/globalpage/codegen-module",
-                                "data": {
-                                    "showSuccessMessage": "<?php echo $moduleGeneratorHelper->getCurrentlySelectedModule() ? true : false; ?>"
-                                }
+                                "showSuccessMessage": "<?php echo $moduleGeneratorHelper->getCurrentlySelectedModule() ? true : false; ?>",
+                                "moduleList": <?php echo json_encode($moduleGeneratorHelper->getModuleList());?>
                             },
                             "controller": {
                                 "component": "Ibg_Codegen/js/globalpage/codegen-controller",
-                                "data": {
-                                    "showSuccessMessage": "<?php echo $moduleGeneratorHelper->getCurrentlySelectedModule() ? true : false; ?>"
-                                }
+                                "showSuccessMessage": "<?php echo $moduleGeneratorHelper->getCurrentlySelectedModule() ? true : false; ?>"
                             }
                         }
                     }

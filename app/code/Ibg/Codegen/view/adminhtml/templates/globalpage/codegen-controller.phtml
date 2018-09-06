@@ -18,89 +18,88 @@ $areas = $block->getApplicationAreas();
     </div>
 </div>
 
-<div id="controller_modal" data-submit-url="<?php echo $block->getUrl('codegen/controller/createControllerAndRoute', ['_secure' => true]); ?>" class="codegen_modal hidden" data-bind="scope: 'codegen'">
+<div id="controller_modal" data-submit-url="<?php echo $block->getUrl('codegen/controller/createControllerAndRoute', ['_secure' => true]); ?>" class="codegen_modal hidden" data-bind="scope: 'codegen'" data-component="codegen.controller">
     <div data-role="spinner" data-component="codegen.controller.form" class="admin__data-grid-loading-mask" style="display: block;">
         <div class="spinner">
             <span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span>
         </div>
     </div>
     <div class="slider">
-        <div class="module slider-content" data-bind="scope: 'codegen', visible: !(currentModule() && isDecisive()), css: {active: !(currentModule() && isDecisive())}">
-            <?php include __DIR__ . '/parts/module.phtml'; ?>
-        </div>
-        <div class="controller slider-content" data-bind="scope: 'codegen.controller', css: {active: (currentModule() && isDecisive())}">
+        <?php echo $block->getAdditionalSlides(); ?>
+        <div class="controller" data-title="Create Controller" data-bind="scope: 'codegen.controller'">
             <div data-role="messages" class="messages">
-                <div class="admin__fieldset-wrapper-content">
-                    <div class="fieldset-wrapper-title">
-                        <strong>
-                            <span>Create New Controller</span>
-                        </strong>
-                    </div>
-                    <fieldset class="admin__fieldset">
-                        <fieldset class="admin__field">
-                            <label class="admin__field-label" for="codegen_area">
-                                <span><?php echo __('Area'); ?></span>
-                            </label>
 
-                            <div class="admin__field-control">
-                                <select class="admin__control-select" id="codegen_area">
-                                    <?php if(!empty($areas) && is_array($areas)){ ?>
-                                        <?php foreach($areas as $area){ ?>
-                                            <option value="<?php echo $area; ?>"><?php echo $area; ?></option>
-                                        <?php } ?>
-                                    <?php } ?>
-                                </select>
-
-                                <div class="admin__field-note">
-                                    <span>Area where the current controller will be created.</span>
-                                </div>
-                            </div>
-                        </fieldset>
-
-                        <fieldset class="admin__field">
-                            <label class="admin__field-label" for="codegen_front_name">
-                                <span><?php echo __('Front Name'); ?></span>
-                            </label>
-
-                            <div class="admin__field-control">
-                                <input class="admin__control-text" type="text" id="codegen_front_name" maxlength="255">
-
-                                <div class="admin__field-note">
-                                    <span><?php echo sprintf(__('Front name should match the following pattern: %s. Examples <strong>front_name</strong>, <strong>front-name</strong>, <strong>frontname</strong>, <strong>frontName</strong>'), $block->getFrontNameRegEx()); ?></span>
-                                    <span><?php echo sprintf(__('<strong>Hint: </strong>You can also toggle on the "Generate the route" to also generate routes.xml file.')); ?></span>
-                                </div>
-                            </div>
-                        </fieldset>
-
-                        <fieldset class="admin__field">
-                            <label class="admin__field-label" for="codegen_controller_name">
-                                <span><?php echo __('Controller Name'); ?></span>
-                            </label>
-
-                            <div class="admin__field-control">
-                                <input class="admin__control-text" type="text" id="codegen_controller_name" maxlength="255">
-
-                                <div class="admin__field-note">
-                                    <span><?php echo sprintf(__('Controller name should match the following pattern: %s. Examples <strong>Main, MainController</strong>'), $block->getControllerNameRegEx()); ?></span>
-                                </div>
-                            </div>
-                        </fieldset>
-
-                        <fieldset class="admin__field">
-                            <label class="admin__field-label" for="codegen_action_name">
-                                <span><?php echo __('Action Name'); ?></span>
-                            </label>
-
-                            <div class="admin__field-control">
-                                <input class="admin__control-text" type="text" id="codegen_action_name" maxlength="255">
-
-                                <div class="admin__field-note">
-                                    <span><?php echo sprintf(__('Action name should match the following pattern: %s. Examples <strong>Index, UploadPost</strong>'), $block->getActionNameRegEx()); ?></span>
-                                </div>
-                            </div>
-                        </fieldset>
-                    </fieldset>
+            </div>
+            <div class="admin__fieldset-wrapper-content">
+                <div class="fieldset-wrapper-title">
+                    <strong>
+                        <span>Create New Controller</span>
+                    </strong>
                 </div>
+                <fieldset class="admin__fieldset">
+                    <fieldset class="admin__field">
+                        <label class="admin__field-label" for="codegen_area">
+                            <span><?php echo __('Area'); ?></span>
+                        </label>
+
+                        <div class="admin__field-control">
+                            <select class="admin__control-select" id="codegen_area">
+                                <?php if(!empty($areas) && is_array($areas)){ ?>
+                                    <?php foreach($areas as $area){ ?>
+                                        <option value="<?php echo $area; ?>"><?php echo $area; ?></option>
+                                    <?php } ?>
+                                <?php } ?>
+                            </select>
+
+                            <div class="admin__field-note">
+                                <span>Area where the current controller will be created.</span>
+                            </div>
+                        </div>
+                    </fieldset>
+
+                    <fieldset class="admin__field">
+                        <label class="admin__field-label" for="codegen_front_name">
+                            <span><?php echo __('Front Name'); ?></span>
+                        </label>
+
+                        <div class="admin__field-control">
+                            <input class="admin__control-text" type="text" id="codegen_front_name" maxlength="255">
+
+                            <div class="admin__field-note">
+                                <span><?php echo sprintf(__('Front name should match the following pattern: %s. Examples <strong>front_name</strong>, <strong>front-name</strong>, <strong>frontname</strong>, <strong>frontName</strong>'), $block->getFrontNameRegEx()); ?></span>
+                                <span><?php echo sprintf(__('<strong>Hint: </strong>You can also toggle on the "Generate the route" to also generate routes.xml file.')); ?></span>
+                            </div>
+                        </div>
+                    </fieldset>
+
+                    <fieldset class="admin__field">
+                        <label class="admin__field-label" for="codegen_controller_name">
+                            <span><?php echo __('Controller Name'); ?></span>
+                        </label>
+
+                        <div class="admin__field-control">
+                            <input class="admin__control-text" type="text" id="codegen_controller_name" maxlength="255">
+
+                            <div class="admin__field-note">
+                                <span><?php echo sprintf(__('Controller name should match the following pattern: %s. Examples <strong>Main, MainController</strong>'), $block->getControllerNameRegEx()); ?></span>
+                            </div>
+                        </div>
+                    </fieldset>
+
+                    <fieldset class="admin__field">
+                        <label class="admin__field-label" for="codegen_action_name">
+                            <span><?php echo __('Action Name'); ?></span>
+                        </label>
+
+                        <div class="admin__field-control">
+                            <input class="admin__control-text" type="text" id="codegen_action_name" maxlength="255">
+
+                            <div class="admin__field-note">
+                                <span><?php echo sprintf(__('Action name should match the following pattern: %s. Examples <strong>Index, UploadPost</strong>'), $block->getActionNameRegEx()); ?></span>
+                            </div>
+                        </div>
+                    </fieldset>
+                </fieldset>
             </div>
         </div>
     </div>

@@ -1,6 +1,6 @@
 define([
     'jquery',
-    'uiComponent',
+    'Ibg_Codegen/js/components/uiComponent',
     'Magento_Ui/js/modal/modal',
     'Magento_Ui/js/lib/spinner',
     'Ibg_Codegen/js/globalpage/codegen-bindings',
@@ -20,11 +20,11 @@ define([
 
         initialize: function(){
 
-            let self = this;
-
             this._super();
 
-            this.showSuccessMessage = ko.observable(this.data.showSuccessMessage);
+            let self = this;
+
+            this.showSuccessMessage = ko.observable(this.showSuccessMessage);
 
             $(document).ready(function(){
 
@@ -36,16 +36,9 @@ define([
                         'trigger': '#nav li[data-ui-id="menu-ibg-codegen-controller"]',
                         'buttons': [
                             {
-                                text: 'Next Step',
-                                class: 'action primary action-main-popup next-step',
-                                click: function(){
-
-                                }
-                            },
-                            {
                                 text: 'Create Controller',
-                                class: 'action primary action-main-popup last-step display-none hidden',
-                                click: function () {
+                                class: 'action primary action-main-popup',
+                                click: function(){
                                     $modalMessageContainer.html('');
                                     callAjax(this);
                                 }
@@ -64,50 +57,61 @@ define([
                     $loader.hide();
 
                     bindOpenModal();
-                    bindClickNextStep();
-                    bindCurrentModuleChange();
                 }
             });
 
             function callAjax(modal){
+                let $area = $modal.find('#codegen_area');
+                let $frontName = $modal.find('#codegen_front_name');
+                let $controllerName = $modal.find('#codegen_controller_name');
+                let $actionName = $modal.find('#codegen_action_name');
+
+                let postData = {
+                    form_key: window.FORM_KEY,
+                    area: $area.val(),
+                    front_name: $frontName.val(),
+                    controller_name: $controllerName.val(),
+                    action_name: $actionName.val(),
+                };
+
+                let $destination = $modal.find('#destination');
+                if($destination.length === 1){
+                    postData.destination = $destination.val();
+
+                    if($destination.val() === 'create'){
+                        postData.module_name = $modal.find('#codegen_module_name_create').val();
+                    }else if($destination.val() === 'select'){
+                        postData.module_name = $modal.find('#codegen_module_name_select').val();
+                    }
+                }
+
                 $.ajax({
                     url: self.url,
                     method: 'post',
                     dataType: 'json',
-                    data: {
-                        form_key: window.FORM_KEY,
-                        destination: self.currentAction(),
-                        module_name: self.currentModule()
-                    },
+                    data: postData,
                     beforeSend: function(){
                         $loader.show();
                     },
                     success: function(data){
-                        let messageTemplate = '';
-                        let $moduleSelect = $modal.find('#codegen_module_name_select');
                         let $messageSuccess = $('.currently_selected_module_wrapper.success');
                         let $messageWarning = $('.currently_selected_module_wrapper.warning');
 
-                        if(data.success){
-                            $messageSuccess.show();
-                            $messageWarning.hide();
-                            if(self.currentAction() === 'create'){
-                                $moduleSelect.append('<option value="' + self.currentModule() + '">' + self.currentModule() + '</option>');
-                            }
-                            modal.closeModal();
-                            self.showSuccessMessage(true);
-                        }else{
-                            if(Array.isArray(data.message)){
-                                for(let i = 0; i < data.message.length; i++){
-                                    messageTemplate += '<div class="message message-error"><div>' + data.message[i] + '</div></div>';
+                        if(data !== undefined) {
+                            if (data.success) {
+                                $messageSuccess.show();
+                                $messageWarning.hide();
+                                if(postData.destination === 'create'){
+                                    uiRegistry.get('codegen.module').moduleList.push(postData.module_name);
                                 }
-                            }else if(typeof(data.message) === "string"){
-                                messageTemplate += '<div class="message message-error"><div>' + data.message + '</div></div>';
+                                self.removeModuleFromSlider();
+                                modal.closeModal();
+                                self.showSuccessMessage(true);
+                                uiRegistry.get('codegen.module').showSuccessMessage(true);
+                            } else {
+                                let messageTemplate = '<div class="message message-error"><div>' + data.message + '</div></div>';
+                                $modalMessageContainer.append(messageTemplate);
                             }
-                        }
-
-                        if(messageTemplate !== ''){
-                            $modalMessageContainer.append(messageTemplate);
                         }
                     },
                     error: function(jqXHR, textStatus, error){
@@ -125,39 +129,8 @@ define([
                     $modal.data('modal').openModal();
                 });
             }
-
-            function bindClickNextStep(){
-                $modal.closest('.modal-inner-wrap').find('.next-step').on('click', '', function(){
-                    let $activeSliderContent = $modal.find('.slider-content.active');
-                    let $next = $activeSliderContent.next('.slider-content');
-
-                    if($next.length === 1){
-                        $next.addClass('active');
-                        $activeSliderContent.removeClass('active');
-
-                        $next = $next.next('.slider-content');
-                    }
-
-                    if($next.length === 0){
-                        $modal.closest('.modal-inner-wrap').find('.last-step').toggleClass('display-none hidden');
-                        $modal.closest('.modal-inner-wrap').find('.next-step').toggleClass('display-none hidden');
-                    }else{
-
-                    }
-                });
-            }
-
-            function bindCurrentModuleChange(){
-                let parent = self.getParent();
-                parent.currentModule.subscribe(function(newValue){
-                    if(newValue.length){
-                        $modal.closest('.modal-inner-wrap').find('.last-step').toggleClass('display-none hidden');
-                        $modal.closest('.modal-inner-wrap').find('.next-step').toggleClass('display-none hidden');
-                    }
-                });
-            }
         },
-        
+
         getParent: function(){
             return uiRegistry.get(this.parentName);
         }

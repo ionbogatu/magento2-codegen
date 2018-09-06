@@ -76,12 +76,13 @@ abstract class GeneratorHelper extends AbstractHelper
     /**
      * @param $file
      * @param $location
+     * @param $bindVariables
      * @return bool
      * @throws \Exception
      */
-    public function copyFileToLocation($file, $location, $bindVariables){
+    public function copyFileToLocation($file, $location, $bindVariables, $newFile = null){
 
-        $pathinfo = pathinfo($file);
+        $pathinfo = !empty($newFile) ? pathinfo($newFile) : pathinfo($file);
         $newFile = $location . '/' . $pathinfo['filename'];
         $newFileDirectory = dirname($newFile);
 

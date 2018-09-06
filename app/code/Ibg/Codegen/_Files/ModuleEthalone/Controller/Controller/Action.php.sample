@@ -1,0 +1,24 @@
+<?php
+
+namespace {{modulePath}}\Controller\{{controllerName}};
+
+class {{actionName}} extends \Magento\Framework\App\Action\Action
+{
+    public function __construct(
+        \Magento\Framework\App\Action\Context $context
+    ){
+        parent::__construct($context);
+    }
+
+    /**
+     * Execute action based on request and return result
+     *
+     * Note: Request will be added as operation argument in future
+     *
+     * @return void
+     */
+    public function execute()
+    {
+        // TODO: Implement execute() method.
+    }
+}

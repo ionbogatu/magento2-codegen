@@ -64,5 +64,29 @@
              sortOrder="10"
              parent="Ibg_Codegen::frontend"
              resource="Ibg_Codegen::theme"/>-->
+
+        <add id="Ibg_Codegen::experiments"
+             title="Experiments"
+             translate="title"
+             module="Ibg_Codegen"
+             sortOrder="1000"
+             parent="Ibg_Codegen::main"
+             resource="Ibg_Codegen::experiments"/>
+        <add id="Ibg_Codegen::clicommand"
+             title="Cli Command"
+             translate="label"
+             module="Ibg_Codegen"
+             sortOrder="10"
+             parent="Ibg_Codegen::experiments"
+             action="codegen/cli/caller"
+             resource="Ibg_Codegen::clicommand"/>
+        <add id="Ibg_Codegen::access_generated"
+             title="Access Generated"
+             translate="label"
+             module="Ibg_Codegen"
+             sortOrder="10"
+             parent="Ibg_Codegen::experiments"
+             action="test_module/index/index"
+             resource="Ibg_Codegen::clicommand"/>
     </menu>
 </config>

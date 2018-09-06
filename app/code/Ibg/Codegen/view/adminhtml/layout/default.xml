@@ -18,10 +18,12 @@
             <block class="Magento\Backend\Block\Template" name="codegen.bindings" template="Ibg_Codegen::globalpage/codegen-bindings.phtml" after="-"/>
         </referenceContainer>
         <referenceContainer name="notices.wrapper">
-            <block class="Ibg\Codegen\Block\Adminhtml\Globalpage\Module" name="codegen.module" template="Ibg_Codegen::globalpage/codegen-module.phtml"/>
-            <block class="Ibg\Codegen\Block\Adminhtml\Globalpage\Controller" name="codegen.controller" template="Ibg_Codegen::globalpage/codegen-controller.phtml"/>
-            <!--<block class="Ibg\Codegen\Block\Adminhtml\Globalpage\Block" name="block" template="Ibg_Codegen::globalpage/block.phtml"/>
-            <block class="Ibg\Codegen\Block\Adminhtml\Globalpage\Helper" name="helper" template="Ibg_Codegen::globalpage/helper.phtml"/>-->
+            <container name="codegen">
+                <block class="Ibg\Codegen\Block\Adminhtml\Globalpage\Module" name="codegen.module" template="Ibg_Codegen::globalpage/codegen-module.phtml"/>
+                <block class="Ibg\Codegen\Block\Adminhtml\Globalpage\Controller" name="codegen.controller" template="Ibg_Codegen::globalpage/codegen-controller.phtml"/>
+                <!--<block class="Ibg\Codegen\Block\Adminhtml\Globalpage\Block" name="block" template="Ibg_Codegen::globalpage/block.phtml"/>
+                <block class="Ibg\Codegen\Block\Adminhtml\Globalpage\Helper" name="helper" template="Ibg_Codegen::globalpage/helper.phtml"/>-->
+            </container>
         </referenceContainer>
         <referenceContainer name="legal.system">
             <block class="Magento\Backend\Block\Template" name="server_time" template="Ibg_Codegen::globalpage/server_time.phtml" before="version" />

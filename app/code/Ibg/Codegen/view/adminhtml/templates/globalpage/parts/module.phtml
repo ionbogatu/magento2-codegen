@@ -5,14 +5,13 @@
  * Date: 7/9/2018
  * Time: 7:50 PM
  *
- * @var $block \Ibg\Codegen\Block\Adminhtml\Globalpage\Module
+ * @var $block \Magento\Backend\Block\Template
  */
 
 $currentlySelectedModule = $this->helper('Ibg\Codegen\Helper\ModuleGenerator')->getCurrentlySelectedModule();
-$moduleList = $this->helper('Ibg\Codegen\Helper\ModuleGenerator')->getModuleList();
 ?>
 
-<div data-bind="scope: 'codegen.module'">
+<div data-bind="scope: 'codegen.module'" data-title="Create Module" <?php echo !empty($block->getAdditionalClass()) ? 'data-class="' . $block->getAdditionalClass() . '"' : '';?>>
     <div data-role="messages" class="messages">
 
     </div>
@@ -57,12 +56,10 @@ $moduleList = $this->helper('Ibg\Codegen\Helper\ModuleGenerator')->getModuleList
                 </label>
 
                 <div class="admin__field-control">
-                    <select class="admin__control-select" id="codegen_module_name_select" data-bind="event: {click: function(data, event){ changeModuleAction('select', data) } }">
-                        <?php if(!empty($moduleList) && is_array($moduleList)){ ?>
-                            <?php foreach($moduleList as $key => $module){ ?>
-                                <option <?php echo ($currentlySelectedModule === $module) ? 'selected' : ''; ?> value="<?php echo $module; ?>"><?php echo $module; ?></option>
-                            <?php } ?>
-                        <?php } ?>
+                    <select class="admin__control-select" id="codegen_module_name_select" data-bind="event: {click: function(data, event){ changeModuleAction('select', data) } }, value: $parent.currentModule()">
+                        <!-- ko foreach: moduleList -->
+                            <option data-bind="text: $data, value: $data"></option>
+                        <!-- /ko -->
                     </select>
                 </div>
             </fieldset>

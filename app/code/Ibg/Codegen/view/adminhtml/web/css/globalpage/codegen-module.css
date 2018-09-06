@@ -24,7 +24,6 @@
     padding: 2rem;
 }
 
-#controller_modal .slider-content.module .admin__fieldset-wrapper-content,
 #currently_selected_module_modal .admin__fieldset-wrapper-content{
     box-sizing: border-box;
     opacity: 0.7;
@@ -32,8 +31,6 @@
     transition: transform 0.2s ease-in-out;
 }
 
-#controller_modal .slider-content.module .admin__fieldset-wrapper-content.active,
-#controller_modal .slider-content.module .admin__fieldset-wrapper-content:hover,
 #currently_selected_module_modal .admin__fieldset-wrapper-content.active,
 #currently_selected_module_modal .admin__fieldset-wrapper-content:hover{
     opacity: 1;
@@ -42,7 +39,6 @@
     background: #f6f6f6;
 }
 
-#controller_modal .slider-content.module .admin__fieldset-wrapper-content.active,
 #currently_selected_module_modal .admin__fieldset-wrapper-content.active{
     border: 2px dashed grey;
 }

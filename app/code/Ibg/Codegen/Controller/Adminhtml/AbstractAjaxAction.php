@@ -17,7 +17,7 @@ abstract class AbstractAjaxAction extends Action
     /**
      * @var CodegenLogger
      */
-    private $codegenLogger;
+    protected $codegenLogger;
 
     /**
      * AbstractAjaxAction constructor.
@@ -34,6 +34,9 @@ abstract class AbstractAjaxAction extends Action
         $this->codegenLogger = $codegenLogger;
     }
 
+    /**
+     * @throws \Exception
+     */
     public function isAjaxAndPost()
     {
         $result = $this->resultFactory->create(ResultFactory::TYPE_JSON);
@@ -48,16 +51,10 @@ abstract class AbstractAjaxAction extends Action
         }
 
         if(!empty($errorMessages)){
-            return $result->setData(['success' => false, 'message' => $errorMessages]);
+            throw new \Exception($errorMessages);
         }
 
-        try{
-            $this->validateParams();
-        }catch(\Exception $e){
-            return $result->setData(['success' => false, 'message' => $e->getMessage()]);
-        }
-
-        return $result;
+        $this->validateParams();
     }
 
     public function logTime($message){
