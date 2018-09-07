@@ -13,11 +13,22 @@
 $moduleGeneratorHelper = $this->helper('\Ibg\Codegen\Helper\ModuleGenerator');
 ?>
 
+<div id="context-menu-wrapper">
+    <ul id="context-menu" data-bind="scope: 'contextMenu'">
+        <!-- ko foreach: items -->
+            <li data-bind="text: title, attr: {'data-cb': $data.callback}"></li>
+        <!-- /ko -->
+    </ul>
+</div>
+
 <script type="text/x-magento-init">
     {
         "*": {
             "Magento_Ui/js/core/app": {
                 "components": {
+                    "contextMenu": {
+                        "component": "Ibg_Codegen/js/components/context-menu"
+                    },
                     "codegen": {
                         "component": "Ibg_Codegen/js/globalpage/codegen-bindings",
                         "currentModule": "<?php echo $moduleGeneratorHelper->getCurrentlySelectedModule() ? $moduleGeneratorHelper->getCurrentlySelectedModule() : '' ?>",

@@ -7,6 +7,7 @@
 -->
 <page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" layout="admin-1column" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
     <head>
+        <css src="Ibg_Codegen::css/components/context-menu.css"/>
         <css src="Ibg_Codegen::css/globalpage/codegen-module.css"/>
         <css src="Ibg_Codegen::css/globalpage/codegen-controller.css"/>
         <css src="Ibg_Codegen::css/globalpage/codegen-block.css"/>
