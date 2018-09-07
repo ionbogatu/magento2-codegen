@@ -3,13 +3,12 @@ define([
     'Ibg_Codegen/js/components/uiComponent',
     'Magento_Ui/js/modal/modal',
     'Magento_Ui/js/lib/spinner',
-    'Ibg_Codegen/js/globalpage/codegen-bindings',
-    'ko',
+    'mage/translate',
     'uiRegistry'
-], function($, Component, modal, loader, codegenBindings, ko, uiRegistry){
+], function ($, Component, modal, loader, $t, uiRegistry) {
 
-    let $modal = $('#controller_modal');
-    let $loader = loader.get('codegen.controller.form');
+    let $modal = $('#helper_modal');
+    let $loader = loader.get('codegen.helper.form');
     let $modalMessageContainer = $modal.find('.messages');
 
     return Component.extend({
@@ -18,34 +17,36 @@ define([
             url: $modal.data('submit-url')
         },
 
-        initialize: function(){
+        initialize: function () {
 
             this._super();
 
             let self = this;
 
-            this.showSuccessMessage = ko.observable(this.showSuccessMessage);
+            $(document).ready(function () {
 
-            $(document).ready(function(){
-
-                if($modal.length === 1) {
+                if ($modal.length === 1) {
                     modal({
                         'type': 'popup',
                         'responsive': true,
                         'innerScroll': false,
-                        'trigger': '#nav li[data-ui-id="menu-ibg-codegen-controller"]',
+                        'trigger': '#nav li[data-ui-id="menu-ibg-codegen-helper"]',
                         'buttons': [
                             {
-                                text: 'Create Controller',
+                                text: $t('Create Helper'),
                                 class: 'action primary action-main-popup',
-                                click: function(){
+
+                                /** @inheritdoc */
+                                click: function () {
                                     $modalMessageContainer.html('');
                                     callAjax(this);
                                 }
                             },
                             {
-                                text: 'Close',
+                                text: $t('Close'),
                                 class: 'action secondary action-hide-popup',
+
+                                /** @inheritdoc */
                                 click: function () {
                                     this.closeModal();
                                 }
@@ -53,25 +54,18 @@ define([
                         ]
                     }, $modal);
                     $modal.removeClass('hidden');
-
                     $loader.hide();
-
-                    bindEventOpenModal();
                 }
             });
 
-            function callAjax(modal){
+            function callAjax(modal) {
                 let $area = $modal.find('#codegen_area');
-                let $frontName = $modal.find('#codegen_front_name');
-                let $controllerName = $modal.find('#codegen_controller_name');
-                let $actionName = $modal.find('#codegen_action_name');
+                let $helperName = $modal.find('#codegen_helper_name');
 
                 let postData = {
                     form_key: window.FORM_KEY,
                     area: $area.val(),
-                    front_name: $frontName.val(),
-                    controller_name: $controllerName.val(),
-                    action_name: $actionName.val(),
+                    helper_name: $helperName.val(),
                 };
 
                 let $destination = $modal.find('#destination');
@@ -94,20 +88,15 @@ define([
                         $loader.show();
                     },
                     success: function(data){
-                        let $messageSuccess = $('.currently_selected_module_wrapper.success');
-                        let $messageWarning = $('.currently_selected_module_wrapper.warning');
-
                         if(data !== undefined) {
                             if (data.success) {
-                                $messageSuccess.show();
-                                $messageWarning.hide();
                                 if(postData.destination === 'create'){
                                     uiRegistry.get('codegen.module').moduleList.push(postData.module_name);
                                 }
                                 self.removeModuleFromSlider();
                                 modal.closeModal();
-                                self.showSuccessMessage(true);
                                 uiRegistry.get('codegen.module').showSuccessMessage(true);
+                                uiRegistry.get('codegen.controller').showSuccessMessage(true);
                             } else {
                                 let messageTemplate = '<div class="message message-error"><div>' + data.message + '</div></div>';
                                 $modalMessageContainer.append(messageTemplate);
@@ -123,16 +112,14 @@ define([
                     }
                 });
             }
-
-            function bindEventOpenModal(){
-                $('body').on('click', '.controller_target', function(){
-                    $modal.data('modal').openModal();
-                });
-            }
         },
 
         getParent: function(){
             return uiRegistry.get(this.parentName);
+        },
+
+        getHelperPath: function(){
+            return '\\' + this.getParent().currentModule().replace('_', '\\') + '\\Helper\\';
         }
     });
 });

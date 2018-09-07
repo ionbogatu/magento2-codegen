@@ -39,8 +39,6 @@ abstract class AbstractAjaxAction extends Action
      */
     public function isAjaxAndPost()
     {
-        $result = $this->resultFactory->create(ResultFactory::TYPE_JSON);
-
         $errorMessages = [];
         if(!$this->getRequest()->isPost()){
             $errorMessages[] = __('Unsupported HTTP Verb.');

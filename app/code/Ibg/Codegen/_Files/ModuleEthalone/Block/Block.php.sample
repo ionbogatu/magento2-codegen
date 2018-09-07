@@ -1,0 +1,10 @@
+<?php
+
+namespace {{modulePath}}\Block;
+
+use Magento\Framework\View\Element\Template;
+
+class {{blockName}} extends Template
+{
+
+}

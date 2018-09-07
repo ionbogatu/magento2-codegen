@@ -1,0 +1,10 @@
+<?php
+
+namespace {{modulePath}}\Helper;
+
+use Magento\Framework\App\Helper\AbstractHelper;
+
+class {{helperName}} extends AbstractHelper
+{
+
+}

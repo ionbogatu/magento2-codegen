@@ -50,38 +50,43 @@ class Block extends Template
         $this->areaList = $areaList;
     }
 
-    public function getCurrentlySelectedModule()
+    public function getApplicationAreas()
     {
-        return $this->moduleGeneratorHelper->getCurrentlySelectedModule();
-    }
-
-    public function getBlockClassNameRegEx()
-    {
-        return $this->blockGeneratorHelper->getBlockClassNameRegEx();
-    }
-
-    public function getBlockNameInLayoutRegEx()
-    {
-        return $this->blockGeneratorHelper->getBlockNameInLayoutRegEx();
-    }
-
-    public function getAreas()
-    {
-        $result = [];
-
         $areaCodes = $this->areaList->getCodes();
 
-        foreach($areaCodes as $areaCode){
+        unset($areaCodes[array_search('crontab', $areaCodes)]);
+        unset($areaCodes[array_search('webapi_rest', $areaCodes)]);
+        unset($areaCodes[array_search('webapi_soap', $areaCodes)]);
 
-            if(in_array($areaCode, ['crontab', 'webapi_rest', 'webapi_soap']))
-                continue;
+        return $areaCodes;
+    }
 
-            $result[] = [
-                'label' => $areaCode,
-                'value' => $areaCode,
-            ];
+    public function getAdditionalSlides()
+    {
+        $blocks = [];
+
+        if(!$this->moduleGeneratorHelper->getCurrentlySelectedModule()){
+            /**
+             * @var \Magento\Backend\Block\Template $block
+             */
+            $moduleBlock = $this->getLayout()->createBlock('\Magento\Backend\Block\Template', 'codegen.block.module');
+            $moduleBlock->setData('additional_class', 'module');
+            $moduleBlock->setData('module_name_reg_ex', $this->moduleGeneratorHelper->getModuleNameRegEx());
+            $moduleBlock->setTemplate('Ibg_Codegen::globalpage/parts/module.phtml');
+            $blocks[] = $moduleBlock;
+        }
+
+        $result = '';
+
+        foreach($blocks as $block){
+            $result .= $block->toHtml();
         }
 
         return $result;
+    }
+
+    public function getBlockNameRegEx()
+    {
+        return $this->blockGeneratorHelper->getBlockNameRegEx();
     }
 }

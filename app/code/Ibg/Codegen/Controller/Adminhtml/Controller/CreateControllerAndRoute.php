@@ -161,7 +161,7 @@ class CreateControllerAndRoute extends AbstractAjaxAction
         $pattern = $this->controllerAndRouteGeneratorHelper->getControllerNameRegEx();
         $pregMatchResult = preg_match($pattern, $params['controller_name'], $matches);
         if($pregMatchResult === 0){
-            throw new \Exception(sprintf(__('%s is an invalid name for controller name. Please choose another one that match the regular expression %s'), $params['controller_name'], $pattern));
+            throw new \Exception(sprintf(__('%s is an invalid name for controller. Please choose another one that match the regular expression %s'), $params['controller_name'], $pattern));
         }else if($pregMatchResult === false){
             throw new \Exception(__('Cannot validate controller name.'));
         }
@@ -174,7 +174,7 @@ class CreateControllerAndRoute extends AbstractAjaxAction
         $pattern = $this->controllerAndRouteGeneratorHelper->getActionNameRegEx();
         $pregMatchResult = preg_match($pattern, $params['action_name'], $matches);
         if($pregMatchResult === 0){
-            throw new \Exception(sprintf(__('%s is an invalid name for action name. Please choose another one that match the regular expression %s'), $params['action_name'], $pattern));
+            throw new \Exception(sprintf(__('%s is an invalid name for action. Please choose another one that match the regular expression %s'), $params['action_name'], $pattern));
         }else if($pregMatchResult === false){
             throw new \Exception(__('Cannot validate action name.'));
         }

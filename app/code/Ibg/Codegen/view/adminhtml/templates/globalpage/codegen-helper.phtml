@@ -1,0 +1,75 @@
+<?php
+/**
+ * Created by PhpStorm.
+ * User: Ion Bogatu
+ * Date: 6/7/2018
+ * Time: 7:40 PM
+ *
+ * @var $block \Ibg\Codegen\Block\Adminhtml\Globalpage\Helper
+ */
+
+$currentlySelectedModule = $this->helper('\Ibg\Codegen\Helper\ModuleGenerator')->getCurrentlySelectedModule();
+$areas = $block->getApplicationAreas();
+?>
+
+<div id="helper_modal" data-submit-url="<?php echo $block->getUrl('codegen/helper/createHelper', ['_secure' => true]); ?>" class="codegen_modal hidden" data-bind="scope: 'codegen'" data-component="codegen.helper">
+    <div data-role="spinner" data-component="codegen.helper.form" class="admin__data-grid-loading-mask" style="display: block;">
+        <div class="spinner">
+            <span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span>
+        </div>
+    </div>
+
+    <div class="slider">
+        <?php echo $block->getAdditionalSlides(); ?>
+        <div class="helper" data-title="Create Helper" data-bind="scope: 'codegen.helper'">
+            <div data-role="messages" class="messages">
+
+            </div>
+            <div class="admin__fieldset-wrapper-content">
+                <div class="fieldset-wrapper-title">
+                    <strong>
+                        <span>Create New Helper</span>
+                    </strong>
+                </div>
+                <fieldset class="admin__fieldset">
+                    <fieldset class="admin__field">
+                        <label class="admin__field-label" for="codegen_area">
+                            <span><?php echo __('Area'); ?></span>
+                        </label>
+
+                        <div class="admin__field-control">
+                            <select class="admin__control-select" id="codegen_area">
+                                <?php if(!empty($areas) && is_array($areas)){ ?>
+                                    <?php foreach($areas as $area){ ?>
+                                        <option value="<?php echo $area; ?>"><?php echo $area; ?></option>
+                                    <?php } ?>
+                                <?php } ?>
+                            </select>
+
+                            <div class="admin__field-note">
+                                <span>Area where the current helper will be created.</span>
+                            </div>
+                        </div>
+                    </fieldset>
+
+                    <fieldset class="admin__field">
+                        <label class="admin__field-label" for="codegen_helper_name">
+                            <span><?php echo __('Block Name'); ?></span>
+                        </label>
+
+                        <div class="admin__field-control">
+                            <div class="admin__field-control-inner">
+                                <span data-bind="text: getHelperPath()"></span>
+                                <input class="admin__control-text" type="text" id="codegen_helper_name" maxlength="255">
+                            </div>
+
+                            <div class="admin__field-note">
+                                <span><?php echo sprintf(__('Helper name should match the following pattern: %s. Examples <strong>Helper</strong>, <strong>NewHelper</strong>, <strong>Path\To\Helper</strong>'), $block->getHelperNameRegEx()); ?></span>
+                            </div>
+                        </div>
+                    </fieldset>
+                </fieldset>
+            </div>
+        </div>
+    </div>
+</div>

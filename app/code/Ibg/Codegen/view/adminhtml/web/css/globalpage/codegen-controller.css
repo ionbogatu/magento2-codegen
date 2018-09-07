@@ -6,7 +6,7 @@
     width: 100%;
 }
 
-button.display-none.hidden{
+/*button.display-none.hidden{
     display: none;
 }
 
@@ -34,7 +34,7 @@ button.display-none.hidden{
     padding: 20px 0;
     background: #f1f1f1;
     transition: box-shadow 0.3s ease-out;
-}
+}*/
 
 #controller_modal .slider-content{
     display: none;

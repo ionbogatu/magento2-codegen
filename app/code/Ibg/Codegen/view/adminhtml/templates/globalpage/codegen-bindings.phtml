@@ -30,6 +30,12 @@ $moduleGeneratorHelper = $this->helper('\Ibg\Codegen\Helper\ModuleGenerator');
                             "controller": {
                                 "component": "Ibg_Codegen/js/globalpage/codegen-controller",
                                 "showSuccessMessage": "<?php echo $moduleGeneratorHelper->getCurrentlySelectedModule() ? true : false; ?>"
+                            },
+                            "block": {
+                                "component": "Ibg_Codegen/js/globalpage/codegen-block"
+                            },
+                            "helper": {
+                                "component": "Ibg_Codegen/js/globalpage/codegen-helper"
                             }
                         }
                     }

@@ -9,7 +9,8 @@
     <head>
         <css src="Ibg_Codegen::css/globalpage/codegen-module.css"/>
         <css src="Ibg_Codegen::css/globalpage/codegen-controller.css"/>
-        <!--<css src="Ibg_Codegen::css/globalpage/block.css"/>-->
+        <css src="Ibg_Codegen::css/globalpage/codegen-block.css"/>
+        <css src="Ibg_Codegen::css/globalpage/codegen-helper.css"/>
         <!--<script src="Ibg_Codegen::js/globalpage/block.js"/>
         <script src="Ibg_Codegen::js/globalpage/helper.js"/>-->
     </head>
@@ -21,8 +22,8 @@
             <container name="codegen">
                 <block class="Ibg\Codegen\Block\Adminhtml\Globalpage\Module" name="codegen.module" template="Ibg_Codegen::globalpage/codegen-module.phtml"/>
                 <block class="Ibg\Codegen\Block\Adminhtml\Globalpage\Controller" name="codegen.controller" template="Ibg_Codegen::globalpage/codegen-controller.phtml"/>
-                <!--<block class="Ibg\Codegen\Block\Adminhtml\Globalpage\Block" name="block" template="Ibg_Codegen::globalpage/block.phtml"/>
-                <block class="Ibg\Codegen\Block\Adminhtml\Globalpage\Helper" name="helper" template="Ibg_Codegen::globalpage/helper.phtml"/>-->
+                <block class="Ibg\Codegen\Block\Adminhtml\Globalpage\Block" name="codegen.block" template="Ibg_Codegen::globalpage/codegen-block.phtml"/>
+                <block class="Ibg\Codegen\Block\Adminhtml\Globalpage\Helper" name="codegen.helper" template="Ibg_Codegen::globalpage/codegen-helper.phtml"/>
             </container>
         </referenceContainer>
         <referenceContainer name="legal.system">
